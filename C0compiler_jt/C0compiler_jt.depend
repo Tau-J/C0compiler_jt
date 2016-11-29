@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1480384128 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstring>
+	"head.h"
+
+1479282017 c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\lexical.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstring>
+
+1479979443 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\lexical.cpp
+	"head.h"
+	<iostream>
+	<fstream>
+	<sstream>
+	<cstring>
+
+1480337813 c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\head.h
+	<string>
+	<vector>
+	<sstream>
+	<fstream>
+
+1479282414 c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\syntax.cpp
+	<iostream>
+	"lexical.cpp"
+	"head.h"
+
+1480350039 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\syntax.cpp
+	"head.h"
+	<iostream>
+	<string>
+	<fstream>
+
+1479870152 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\error.cpp
+	"head.h"
+	<cstdlib>
+	<iostream>
+
+1480144743 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\midcode.cpp
+	"head.h"
+	<iostream>
+	<fstream>
+
+1480389216 source:c:\users\150t\desktop\compiler\2016jt\c0compiler_jt\asm.cpp
+	<iostream>
+	<fstream>
+	"head.h"
+

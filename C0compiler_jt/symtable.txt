@@ -1,0 +1,82 @@
+ 19 20 22 23 25 26
+0:
+name:num1 obj = CONST typ = int value = 1 addr = 1 paramNum = 0
+
+1:
+name:num_2 obj = CONST typ = int value = -2 addr = 2 paramNum = 0
+
+2:
+name:num_0 obj = CONST typ = int value = 0 addr = 3 paramNum = 0
+
+3:
+name:num_a obj = CONST typ = int value = 0 addr = 4 paramNum = 0
+
+4:
+name:ch_a obj = CONST typ = char value = 97 addr = 5 paramNum = 0
+
+5:
+name:ch_0 obj = CONST typ = char value = 48 addr = 6 paramNum = 0
+
+6:
+name:ch__ obj = CONST typ = char value = 95 addr = 7 paramNum = 0
+
+7:
+name:ch_star obj = CONST typ = char value = 42 addr = 8 paramNum = 0
+
+8:
+name:ch_plus obj = CONST typ = char value = 45 addr = 9 paramNum = 0
+
+9:
+name:ch_b obj = CONST typ = char value = 98 addr = 10 paramNum = 0
+
+10:
+name:num3 obj = VARIABLE typ = int value = 98 addr = 11 paramNum = 0
+
+11:
+name:num4 obj = VARIABLE typ = int value = 98 addr = 12 paramNum = 0
+
+12:
+name:num_arry1 obj = VARIABLE typ = int value = 98 addr = 13 paramNum = 3
+
+13:
+name:num5 obj = VARIABLE typ = int value = 98 addr = 14 paramNum = 3
+
+14:
+name:ch_c obj = VARIABLE typ = char value = 98 addr = 15 paramNum = 3
+
+15:
+name:ch_d obj = VARIABLE typ = char value = 98 addr = 16 paramNum = 3
+
+16:
+name:ch2 obj = VARIABLE typ = char value = 98 addr = 17 paramNum = 3
+
+17:
+name:ch_arry1 obj = VARIABLE typ = char[] value = 98 addr = 18 paramNum = 2
+
+18:
+name:ch_minus obj = VARIABLE typ = char value = 98 addr = 19 paramNum = 2
+
+19:
+name:i_func_return_1 obj = FUNCTION typ = int value = 98 addr = 0 paramNum = 0
+
+20:
+name:i_func_add obj = FUNCTION typ = int value = 98 addr = 0 paramNum = 1
+
+21:
+name:y obj = PARAM typ = int value = 98 addr = 1 paramNum = 1
+
+22:
+name:func_if_cmp obj = FUNCTION typ = void value = 98 addr = 0 paramNum = 0
+
+23:
+name:func_while obj = FUNCTION typ = void value = 98 addr = 0 paramNum = 0
+
+24:
+name:len obj = CONST typ = int value = 3 addr = 1 paramNum = 0
+
+25:
+name:func_switch obj = FUNCTION typ = void value = 3 addr = 0 paramNum = 0
+
+26:
+name:main obj = FUNCTION typ = void value = 3 addr = 0 paramNum = 0
+

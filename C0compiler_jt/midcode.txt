@@ -1,0 +1,256 @@
+quats:0  const,int,1,num1
+quats:1  const,int,-2,num_2
+quats:2  const,int,0,num_0
+quats:3  const,int,0,num_a
+quats:4  const,char,97,ch_a
+quats:5  const,char,48,ch_0
+quats:6  const,char,95,ch__
+quats:7  const,char,42,ch_star
+quats:8  const,char,45,ch_plus
+quats:9  const,char,98,ch_b
+quats:10  int,,,num3
+quats:11  int,,,num4
+quats:12  int,,,num_arry1
+quats:13  int,,,num5
+quats:14  char,,,ch_c
+quats:15  char,,,ch_d
+quats:16  char,,,ch2
+quats:17  char[],,2,ch_arry1
+quats:18  char,,,ch_minus
+quats:19  func,int,,i_func_return_1
+quats:20  ret,,,1
+quats:21  end,,,i_func_return_1
+quats:22  func,int,,i_func_add
+quats:23  param,int,,y
+quats:24  +,y,1,$temp_var0
+quats:25  ret,,,$temp_var0
+quats:26  end,,,i_func_add
+quats:27  func,void,,func_if_cmp
+quats:28  =,1,,num5
+quats:29  ==,num5,2,$temp_var1
+quats:30  jne,$temp_var1,,temp_label0
+quats:31  print,== check failed,,
+quats:32  jmp,,,temp_label1
+quats:33  label,,,temp_label0
+quats:34  label,,,temp_label1
+quats:35  fupa,,,num5
+quats:36  call,i_func_add,,$temp_var2
+quats:37  =,$temp_var2,,num5
+quats:38  ==,num5,2,$temp_var3
+quats:39  jne,$temp_var3,,temp_label2
+quats:40  print,== check ok,,
+quats:41  jmp,,,temp_label3
+quats:42  label,,,temp_label2
+quats:43  label,,,temp_label3
+quats:44  !=,num5,2,$temp_var4
+quats:45  jne,$temp_var4,,temp_label4
+quats:46  print,!= check failed,,
+quats:47  jmp,,,temp_label5
+quats:48  label,,,temp_label4
+quats:49  label,,,temp_label5
+quats:50  call,i_func_return_1,,$temp_var5
+quats:51  =,$temp_var5,,num5
+quats:52  !=,num5,2,$temp_var6
+quats:53  jne,$temp_var6,,temp_label6
+quats:54  print,return 1 check ok,,
+quats:55  print,!= check ok,,
+quats:56  jmp,,,temp_label7
+quats:57  label,,,temp_label6
+quats:58  label,,,temp_label7
+quats:59  >,num5,5,$temp_var7
+quats:60  jne,$temp_var7,,temp_label8
+quats:61  print,> check failed,,
+quats:62  jmp,,,temp_label9
+quats:63  label,,,temp_label8
+quats:64  print,else check ok,,
+quats:65  print,> check ok,,
+quats:66  label,,,temp_label9
+quats:67  =,5,,num5
+quats:68  <,num5,5,$temp_var8
+quats:69  jne,$temp_var8,,temp_label10
+quats:70  print,< check failed,,
+quats:71  jmp,,,temp_label11
+quats:72  label,,,temp_label10
+quats:73  print,< check ok,,
+quats:74  label,,,temp_label11
+quats:75  =,4,,num5
+quats:76  >=,num5,5,$temp_var9
+quats:77  jne,$temp_var9,,temp_label12
+quats:78  print,>= check failed,,
+quats:79  jmp,,,temp_label13
+quats:80  label,,,temp_label12
+quats:81  label,,,temp_label13
+quats:82  =,5,,num5
+quats:83  >=,num5,5,$temp_var10
+quats:84  jne,$temp_var10,,temp_label14
+quats:85  print,5>=5 check ok,,
+quats:86  jmp,,,temp_label15
+quats:87  label,,,temp_label14
+quats:88  label,,,temp_label15
+quats:89  =,6,,num5
+quats:90  >=,num5,5,$temp_var11
+quats:91  jne,$temp_var11,,temp_label16
+quats:92  print,6>=5 check ok,,
+quats:93  jmp,,,temp_label17
+quats:94  label,,,temp_label16
+quats:95  label,,,temp_label17
+quats:96  =,6,,num5
+quats:97  <=,num5,5,$temp_var12
+quats:98  jne,$temp_var12,,temp_label18
+quats:99  print,<= check failed,,
+quats:100  jmp,,,temp_label19
+quats:101  label,,,temp_label18
+quats:102  label,,,temp_label19
+quats:103  =,5,,num5
+quats:104  <=,num5,5,$temp_var13
+quats:105  jne,$temp_var13,,temp_label20
+quats:106  print,5<=5 check ok,,
+quats:107  jmp,,,temp_label21
+quats:108  label,,,temp_label20
+quats:109  label,,,temp_label21
+quats:110  =,4,,num5
+quats:111  <=,num5,5,$temp_var14
+quats:112  jne,$temp_var14,,temp_label22
+quats:113  print,4<=5 check ok,,
+quats:114  jmp,,,temp_label23
+quats:115  label,,,temp_label22
+quats:116  label,,,temp_label23
+quats:117  <=,num5,10,$temp_var15
+quats:118  jne,$temp_var15,,temp_label24
+quats:119  !=,num5,9,$temp_var16
+quats:120  jne,$temp_var16,,temp_label26
+quats:121  ==,num5,4,$temp_var17
+quats:122  jne,$temp_var17,,temp_label28
+quats:123  print,multiple if check ok,,
+quats:124  jmp,,,temp_label29
+quats:125  label,,,temp_label28
+quats:126  print,multiple if check failed1,,
+quats:127  label,,,temp_label29
+quats:128  jmp,,,temp_label27
+quats:129  label,,,temp_label26
+quats:130  print,multiple if check failed2,,
+quats:131  label,,,temp_label27
+quats:132  jmp,,,temp_label25
+quats:133  label,,,temp_label24
+quats:134  print,multiple if check failed3,,
+quats:135  label,,,temp_label25
+quats:136  end,,,func_if_cmp
+quats:137  func,void,,func_while
+quats:138  const,int,3,len
+quats:139  =,0,,num5
+quats:140  label,,,temp_label30
+quats:141  <,num5,len,$temp_var18
+quats:142  jne,$temp_var18,,temp_label31
+quats:143  print,while for 3 times,,
+quats:144  +,num5,1,$temp_var19
+quats:145  =,$temp_var19,,num5
+quats:146  jmp,,,temp_label30
+quats:147  label,,,temp_label31
+quats:148  label,,,temp_label32
+quats:149  >,num5,0,$temp_var20
+quats:150  jne,$temp_var20,,temp_label33
+quats:151  >,num5,0,$temp_var21
+quats:152  jne,$temp_var21,,temp_label34
+quats:153  print,while if num5 > 0 for 3 times,,
+quats:154  jmp,,,temp_label35
+quats:155  label,,,temp_label34
+quats:156  label,,,temp_label35
+quats:157  -,num5,1,$temp_var22
+quats:158  =,$temp_var22,,num5
+quats:159  jmp,,,temp_label32
+quats:160  label,,,temp_label33
+quats:161  end,,,func_while
+quats:162  func,void,,func_switch
+quats:163  =,1,,num5
+quats:164  print,number 1 switch check,,
+quats:165  switch,num5,,start
+quats:166  label,,,temp_label37
+quats:167  ==,num5,1,$temp_var23
+quats:168  jne,$temp_var23,,temp_label38
+quats:169  print,match check ok,,
+quats:170  jmp,,,temp_label36
+quats:171  label,,,temp_label38
+quats:172  ==,num5,2,$temp_var24
+quats:173  jne,$temp_var24,,temp_label39
+quats:174  print,check failed at ,2,int
+quats:175  jmp,,,temp_label36
+quats:176  label,,,temp_label39
+quats:177  ==,num5,3,$temp_var25
+quats:178  jne,$temp_var25,,temp_label40
+quats:179  print,check failed at ,3,int
+quats:180  jmp,,,temp_label36
+quats:181  label,,,temp_label40
+quats:182  label,,,temp_label36
+quats:183  switch,,,end
+quats:184  =,2,,num5
+quats:185  print,number 1 switch check,,
+quats:186  switch,num5,,start
+quats:187  label,,,temp_label42
+quats:188  ==,num5,1,$temp_var26
+quats:189  jne,$temp_var26,,temp_label43
+quats:190  print,check failed at ,1,int
+quats:191  jmp,,,temp_label41
+quats:192  label,,,temp_label43
+quats:193  ==,num5,2,$temp_var27
+quats:194  jne,$temp_var27,,temp_label44
+quats:195  print,match check ok,,
+quats:196  print,multiple switch statement check ok,,
+quats:197  jmp,,,temp_label41
+quats:198  label,,,temp_label44
+quats:199  ==,num5,3,$temp_var28
+quats:200  jne,$temp_var28,,temp_label45
+quats:201  print,check failed at ,3,int
+quats:202  jmp,,,temp_label41
+quats:203  label,,,temp_label45
+quats:204  label,,,temp_label41
+quats:205  switch,,,end
+quats:206  -,0,1,$temp_var29
+quats:207  =,$temp_var29,,num5
+quats:208  print,default check,,
+quats:209  switch,num5,,start
+quats:210  label,,,temp_label47
+quats:211  ==,num5,1,$temp_var30
+quats:212  jne,$temp_var30,,temp_label48
+quats:213  print,check failed at ,1,int
+quats:214  jmp,,,temp_label46
+quats:215  label,,,temp_label48
+quats:216  ==,num5,2,$temp_var31
+quats:217  jne,$temp_var31,,temp_label49
+quats:218  print,match check ok,,
+quats:219  jmp,,,temp_label46
+quats:220  label,,,temp_label49
+quats:221  ==,num5,3,$temp_var32
+quats:222  jne,$temp_var32,,temp_label50
+quats:223  print,check failed at ,3,int
+quats:224  jmp,,,temp_label46
+quats:225  label,,,temp_label50
+quats:226  print,default check ok,,
+quats:227  label,,,temp_label46
+quats:228  switch,,,end
+quats:229  =,99,,ch_c
+quats:230  print,char switch check ,,
+quats:231  switch,ch_c,,start
+quats:232  label,,,temp_label52
+quats:233  ==,ch_c,97,$temp_var33
+quats:234  jne,$temp_var33,,temp_label53
+quats:235  print,check failed at ,1,int
+quats:236  jmp,,,temp_label51
+quats:237  label,,,temp_label53
+quats:238  ==,ch_c,98,$temp_var34
+quats:239  jne,$temp_var34,,temp_label54
+quats:240  print,check failed at ,2,int
+quats:241  jmp,,,temp_label51
+quats:242  label,,,temp_label54
+quats:243  ==,ch_c,99,$temp_var35
+quats:244  jne,$temp_var35,,temp_label55
+quats:245  print,match check ok,,
+quats:246  jmp,,,temp_label51
+quats:247  label,,,temp_label55
+quats:248  label,,,temp_label51
+quats:249  switch,,,end
+quats:250  end,,,func_switch
+quats:251  func,void,,main
+quats:252  call,func_if_cmp,,
+quats:253  call,func_while,,
+quats:254  call,func_switch,,
+quats:255  end,,,main
