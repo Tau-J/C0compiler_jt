@@ -1,3 +1,4 @@
+//此版本的运行栈已0x00000000为栈底，后面发现与data区冲突且无法结局，已废弃
 #include<iostream>
 #include<fstream>
 #include "head.h"
