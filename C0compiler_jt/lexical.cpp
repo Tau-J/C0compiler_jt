@@ -28,6 +28,8 @@ char srcin[1024];
 int symCount = 0;
 ifstream fin;
 
+bool dontChange = 0;
+
 string resWord[] =
 {
 	"","const","if","else","while","switch",
@@ -216,9 +218,12 @@ void getChar(){
 
 	chr = *ptr++;
 
-	// 所有大写都转为小写 A 65 a 97 相差32
-	if('A' <= chr && chr <= 'Z')
-		chr += 32;
+	if( !dontChange ){
+		// 所有大写都转为小写 A 65 a 97 相差32
+		if('A' <= chr && chr <= 'Z')
+			chr += 32;
+	}
+	
 }
 
 // 如果是保留字则返回对应的类编码，否则返回-1
@@ -246,7 +251,8 @@ void transNum(){
 	ss << token;
 	ss >> num;
 
-	if(num > 2147483647)error(20);
+	if(symbol != MINUS && num > 2147483647)error(20);
+	if(symbol == MINUS && num > 2147483648)error(20);
 }
 
 void clearToken(){
@@ -365,7 +371,9 @@ void getOneSym(){
 		}
 	}
 	else if(isSQuote()){
+		dontChange = 1;
 		getChar();
+		dontChange = 0;
 		if(isPlus() || isMinus() ||
 		   isStar() || isDivid() ||
 		   isLetter() || isDigit()){
@@ -376,7 +384,9 @@ void getOneSym(){
 		}else error(4);
 	}
 	else if(isDQuote()){
+		dontChange = 1;
 		getChar();
+		
 
 		bool errorFlag = 0;
 
@@ -395,10 +405,11 @@ void getOneSym(){
 				break;
 			}
 		}
+		dontChange = 0;
 
 		if(errorFlag) error(6);
 
-		if(token == "") error(28);
+		// if(token == "") error(28);
 
 		symbol = STRING;
 	}

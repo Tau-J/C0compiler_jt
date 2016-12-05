@@ -19,6 +19,7 @@ int main(){
 
 	fin.open(path);
 
+	if(fin == NULL) error(0);//缺少源文件
 // 词法分析运行的代码 v1
 	// while(NULL != fin.getline(srcin,1024)){
 	// 	ptr = srcin;

@@ -293,9 +293,6 @@ void midcode2MIPS(){
 		//局部常变量声明
 		push_Const_Var(&quats[cur_q]);
 
-		if(cur_q==51)
-            cout<<endl;
-
 		if(quats[cur_q].opt == "func"){
 			asm_func(&quats[cur_q]);
 		}
@@ -533,20 +530,26 @@ void get_from_stack(int t, string name, bool get_addr = 0, int t_offset = -1){
 	int var_loc = locInSubSymTab(name,func_loc); // 符号表中该常变量的位置
 	int s_addr;
 
-	if(name == "c")
-        cout<<endl;
-
-	if(var_loc > func_loc)
-        s_addr =   var_loc - func_loc + 1 ; // 运行栈中该常变量相对于函数头部的位置
-    else if(var_loc < func_loc)
+	// 运行栈中该常变量相对于函数头部的位置
+	if(var_loc > func_loc){
+        s_addr =   var_loc - func_loc + 1 ;
+		for(int i = func_loc+1;i<var_loc;i++)
+			if(symtable.element[i].typ == 3 || symtable.element[i].typ == 4)
+				s_addr += symtable.element[i].paramNum - 1;
+	}
+    else if(var_loc < func_loc){
         s_addr = var_loc;
+        for(int i = 0;i<var_loc;i++)
+        	if(symtable.element[i].typ == 3 || symtable.element[i].typ == 4)
+				s_addr += symtable.element[i].paramNum - 1;
+    }
 
     // 先用t存放该值在运行栈中相对于头部的偏移量，t初始化为0
     // li  $t,0
     cout <<"li\t$t"<<t<<",0\n"<<endl;
 
 	if(t_offset > -1){
-		// 如果是函数，则在t中加上相应的偏移量
+		// 如果是数组，则在t中加上相应的偏移量
 		// t = offset
 		// add  $t,$t,$t_offset
 		cout <<"add\t$t"<<t<<",$t"<<t<<",$t"<<t_offset<<endl;
@@ -639,6 +642,9 @@ void asm_become(QUAT* q){
 			// a = b 形式
 			get_from_stack(t1,q->f1);
 			get_from_stack(t2,q->f3,1);
+
+			if(q->f1 == "temp" && q->f3 == "t")
+                cout <<"";
 
 			// sw  $t1,0($t2)
 			cout <<"sw\t$t"<<t1<<",0($t"<<t2<<")\n"<<endl;
@@ -805,6 +811,9 @@ void asm_minus(QUAT* q){
 	//add  $sp,$sp,-4
 	cout <<"add\t$sp,$sp,-4\n"<<endl;
 	sp++;
+
+	if(q->f3 == "$temp_var11")
+        cout<<"";
 
 	addtempvar(q->f3);
 
@@ -1096,7 +1105,10 @@ void asm_ret(QUAT* q){
 		cout <<"sw\t$t"<<t0<<",0($sp)"<<endl;
 		// add  $sp,$sp,-4
 		cout <<"add\t$sp,$sp,-4\n"<<endl;
-		sp++;
+		//  此处不必移动sp，
+		// 因为如果该return执行了，那么sp会被重置，增加没有意义
+		// 如果没有执行，则更不必增加sp
+		// sp++;
 
 		reg_pool.clean_t();
 	}else{
@@ -1114,9 +1126,11 @@ void asm_ret(QUAT* q){
 		cout <<"lw\t$fp,0($fp)"<<endl;
 	}
 
-	// 跳转
-	// jr  $ra
-	cout <<"jr\t$ra\n"<<endl;
+	if(quats[cur_q+1].f3 != "main"){
+		// 跳转
+		// jr  $ra
+		cout <<"jr\t$ra\n"<<endl;
+	}
 
 	// 吃掉没用的end四元式
 	cur_q++;
