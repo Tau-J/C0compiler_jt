@@ -409,7 +409,7 @@ void getOneSym(){
 
 		if(errorFlag) error(6);
 
-		// if(token == "") error(28);
+		// if(token == "") error(28); // 字符串可以是空串，此条错误已移除
 
 		symbol = STRING;
 	}

@@ -34,7 +34,7 @@ string errmsg[]={
 "有返回的函数返回语句必须有返回值",
 "实参和对应形参类型应该相同，除非形参类型为int，实参为char",
 "应是变量",
-"字符串至少有一个字符",
+"数组标识符必须跟随下标",
 "实参个数与形参个数不等",
 "scanf或printf的参数类型不正确",
 "表达式中的函数类型只能是int或char",
@@ -43,7 +43,7 @@ string errmsg[]={
 "应是常量",
 "声明顺序有误",
 "复合语句声明顺序有误",
-"不允许有前导零",
+"数组长度有前导零，或长度为0",
 "应是标识符",
 "常量只能定义为int或char",
 "应是'='",
@@ -60,6 +60,62 @@ string errmsg[]={
 "主函数的函数体之后不允许有内容"
 };
 
+int handler[] = 
+{
+0,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+0,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1
+};
+
 void error(int errorNum){
 	cout << "!!!!!!!!!!!!!!error : " << errorNum << "!!!!!!!!!!!!!!!" <<endl;
 	cout << "line: " << lineNo << endl;
@@ -74,12 +130,18 @@ void error(int errorNum){
 	fout << "code: " << srcin << endl;
 	fout << "reason: " << errmsg[errorNum] << endl;
 	#endif // fDEBUG
+
+	errhandler(handler[errorNum]);
 }
 
 void errhandler(int handleNum){
 	switch(handleNum){
-		case 0:
-			error(9);
+		case 0: 
+			// 中止程序
+			cout << "## fatal error. stop compiling. ##" <<endl;
 			exit(0);
+		case 1:
+			// 不做任何处理
+			break;
 	}
 }

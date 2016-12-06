@@ -519,7 +519,7 @@ void uInt(){
 	// cout << "it is an unsigned int" << endl;
 
 	 if (symbol == INT){
-	 	if(token[0] == '0') error(37);//不允许有前导零
+	 	if(token[0] == '0') error(37);//数组长度有前导零，或长度为0
 	 	else {
 
 	 		t_paramNum = num;
@@ -1413,6 +1413,9 @@ void factor(){
 		t = loc(id,0);
 
 		if(t < 0)error(7);//该标识符未定义
+		else if(symtable.element[t].typ == typCHARARRY ||
+				symtable.element[t].typ == typINTARRY)
+			error(28); // 数组标识符必须跟随下标
 
 		res = id;//将该变量返回给上一级
 
