@@ -207,7 +207,11 @@ bool isValidStrChar(){
 	else return 0;
 }
 void catToken(){
-	token += chr;
+	// 因为最后是在mars中运行，直接原样复制的话，
+	// 遇到\n这种符号会被mars识别为转义后的符号
+	// 因此还需要自行转义一次
+	if(chr == '\\')token += "\\\\";
+	else token += chr;
 }
 
 void retract(){

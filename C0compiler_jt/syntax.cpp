@@ -52,7 +52,7 @@ int locInSubSymTab(string iden,int start = symtable.indexTab[symtable.subTotal])
             i++;
 		}
 		if(i == j){
-			error(7);//该标识符未定义
+			// error(7);//该标识符未定义 // 只返回值，报错应该在函数中进行
 			return -1;
 		}
 	}
@@ -157,7 +157,7 @@ bool isArry = 0;
 
 void testSemicolon(){
 	if(symbol != SEMICOLON)
-		error(18);
+		error(18); // 分号缺失
 	getOneSym();
 }
 
@@ -776,12 +776,14 @@ void statementList(bool ret){
 		symbol == LBRACE || symbol == IDEN ||
 		symbol == SCANFSY || symbol == PRINTFSY ||
 		symbol == SEMICOLON || symbol == SWITCHSY ||
-		symbol == RETURNSY){
+		symbol == RETURNSY ){
 
     // #ifdef sDEBUG
     // if(lineNo == 70)
     //     cout << "";
     // #endif // sDEBUG
+
+
 
 		if(symbol == RETURNSY) retd = 1;
 		statement(ret);
@@ -1595,7 +1597,9 @@ void mainProc(){
 		if(symbol == LBRACE){
 			getOneSym();
 			compoundStatement(0);
-			if(symbol == CONSTSY) error(35);//声明顺序有误
+			// while(symbol == CONSTSY || symbol == INTSY || symbol == CHARSY){
+			// 	error(35);//声明顺序有误
+			// } 
 			if(symbol != RBRACE) error(16);//应是'}'
 			else {
 				symbol = PSTART;

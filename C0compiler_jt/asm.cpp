@@ -1130,6 +1130,12 @@ void asm_ret(QUAT* q){
 		// 跳转
 		// jr  $ra
 		cout <<"jr\t$ra\n"<<endl;
+	}else{
+		// 如果是在主函数中读到return则直接结束程序
+		
+		// li $v0,10
+		cout <<"li\t$v0,10"<<endl;
+		cout <<"syscall\n"<<endl;
 	}
 
 	// 吃掉没用的end四元式
