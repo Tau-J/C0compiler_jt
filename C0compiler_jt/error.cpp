@@ -60,7 +60,7 @@ string errmsg[]={
 "主函数的函数体之后不允许有内容"
 };
 
-int handler[] = 
+int handler[] =
 {
 0,
 1,
@@ -83,7 +83,7 @@ int handler[] =
 1,
 1,
 1,
-1,
+2,
 1,
 1,
 1,
@@ -136,12 +136,16 @@ void error(int errorNum){
 
 void errhandler(int handleNum){
 	switch(handleNum){
-		case 0: 
+		case 0:
 			// 中止程序
 			cout << "## fatal error. stop compiling. ##" <<endl;
 			exit(0);
 		case 1:
 			// 不做任何处理
+			break;
+		case 2:
+			// 读下一个单词
+			getOneSym();
 			break;
 	}
 }
