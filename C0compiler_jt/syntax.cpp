@@ -52,7 +52,7 @@ int locInSubSymTab(string iden,int start = symtable.indexTab[symtable.subTotal])
             i++;
 		}
 		if(i == j){
-			error(7);//该标识符未定义
+			// error(7);//该标识符未定义 // 只返回值，报错应该在函数中进行
 			return -1;
 		}
 	}
@@ -157,7 +157,7 @@ bool isArry = 0;
 
 void testSemicolon(){
 	if(symbol != SEMICOLON)
-		error(18);
+		error(18); // 分号缺失
 	getOneSym();
 }
 
@@ -226,6 +226,7 @@ void constDec(){
 			t_name = token;
 
 			getOneSym();
+
 			if(symbol == BECOMES){
 				// 默认是正整数
 				isNeg = 0;
@@ -261,51 +262,51 @@ void constDec(){
 
 					getOneSym();
 				}
-				while(symbol == COMMA){
-					getOneSym();
-					if(symbol == IDEN){
+			}else error(40);//应是'='
+				
+			while(symbol == COMMA){
+				getOneSym();
+				if(symbol == IDEN){
 
-						t_name = token;
-						t_addr++;
+					t_name = token;
+					t_addr++;
+
+					getOneSym();
+					if(symbol == BECOMES){
+
+						// 默认是正整数
+						isNeg = 0;
 
 						getOneSym();
-						if(symbol == BECOMES){
+						if(symbol == PLUS || symbol == MINUS){
+                            isNeg = (symbol == MINUS)?1:0;
+                            getOneSym();
+                        }
+						if(symbol != INT) error(21);//int常量等号后面必须是整数
+						else {
 
-							// 默认是正整数
-							isNeg = 0;
+							t_value = (isNeg) ? (0-num) : num;
+
+							// 登录符号表
+							enterIntoSymTab(t_name,t_obj,t_typ,t_value,t_addr,t_paramNum);
+
+							#ifdef sDEBUG
+							cout << " name = " << t_name;
+							cout << " obj = " << objName[t_obj];
+							cout << " typ = " << typName[t_typ];
+							cout << " value = " << t_value;
+							cout << " addr = " << t_addr;
+							cout << " paramNum = " << t_paramNum << endl;
+							#endif
+
+							insMidCode("const",typName[t_typ],t_value,t_name);
 
 							getOneSym();
-							if(symbol == PLUS || symbol == MINUS){
-                                isNeg = (symbol == MINUS)?1:0;
-                                getOneSym();
-                            }
-							if(symbol != INT) error(21);//int常量等号后面必须是整数
-							else {
-
-								t_value = (isNeg) ? (0-num) : num;
-
-								// 登录符号表
-								enterIntoSymTab(t_name,t_obj,t_typ,t_value,t_addr,t_paramNum);
-
-								#ifdef sDEBUG
-								cout << " name = " << t_name;
-								cout << " obj = " << objName[t_obj];
-								cout << " typ = " << typName[t_typ];
-								cout << " value = " << t_value;
-								cout << " addr = " << t_addr;
-								cout << " paramNum = " << t_paramNum << endl;
-								#endif
-
-
-								insMidCode("const",typName[t_typ],t_value,t_name);
-
-
-								getOneSym();
-							}
-						}else error(40);//应是'='
-					}else error(38);//应是标识符
-				}
-			}else error(40);//应是'='
+						}
+					}else error(40);//应是'='
+				}else error(38);//应是标识符
+			}
+			
 		}else error(38);//应是标识符
 	}
 	else if(symbol == CHARSY){
@@ -354,7 +355,7 @@ void constDec(){
 						getOneSym();
 						if(symbol == BECOMES){
 							getOneSym();
-							if(symbol != CHAR) error(41);//应是字符
+							if(symbol != CHAR) error(22);//应是字符
 							else {
 
 								t_value = token[0];
@@ -462,6 +463,8 @@ void varDec(){
 		insMidCode(typName[t_typ],"",t_paramNum,t_name);
 	}
 
+	if(symbol != SEMICOLON && symbol != COMMA)
+			error(41); // 应是';'或','
 
 	while(symbol == COMMA){
 		getOneSym();
@@ -504,10 +507,10 @@ void varDec(){
 				// 数组定义
 				insMidCode(typName[t_typ],"",t_paramNum,t_name);
 			}
-
-
-
 		}else error(38);//应是标识符
+
+		if(symbol != SEMICOLON && symbol != COMMA)
+			error(41); // 应是';'或','
 	}
 
 }
@@ -575,13 +578,12 @@ void funcProc(){
 			else error(38);//应是标识符
 		}
 
-		// // 当程序运行到这里说明函数已经定义完毕
-		// insMidCode("end","","",t_name);
+		if(symbol != INTSY && symbol != CHARSY && symbol != VOIDSY)
+			error(50);//函数定义部分不能有语句
+		
 	}
-	if(symbol == CONSTSY)
-		error(35);//声明顺序有误
-	if(symbol == SEMICOLON)
-		error(50);//函数定义部分不能有';'
+	
+	
 }
 
 // ＜有返回值函数定义＞  ::=  ＜声明头部＞‘(’＜参数＞‘)’ ‘{’＜复合语句＞‘}’
@@ -771,17 +773,25 @@ void statementList(bool ret){
 	cout << "it is a statementList" << endl;
 
 	bool retd = 0;
+	bool isStatement = 1;
 
 	while(symbol == IFSY || symbol == WHILESY ||
 		symbol == LBRACE || symbol == IDEN ||
 		symbol == SCANFSY || symbol == PRINTFSY ||
 		symbol == SEMICOLON || symbol == SWITCHSY ||
-		symbol == RETURNSY){
+		symbol == RETURNSY || symbol == INTSY ||
+		symbol == CHARSY){
 
     // #ifdef sDEBUG
     // if(lineNo == 70)
     //     cout << "";
     // #endif // sDEBUG
+
+		if(symbol == INTSY || symbol == CHARSY){
+			error(35);// 声明顺序有误,忽略掉这些声明语句
+			getOneSym();
+			continue;
+		}
 
 		if(symbol == RETURNSY) retd = 1;
 		statement(ret);
@@ -1595,7 +1605,7 @@ void mainProc(){
 		if(symbol == LBRACE){
 			getOneSym();
 			compoundStatement(0);
-			if(symbol == CONSTSY) error(35);//声明顺序有误
+	 
 			if(symbol != RBRACE) error(16);//应是'}'
 			else {
 				symbol = PSTART;
