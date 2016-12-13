@@ -171,8 +171,8 @@ extern void error(int errorNum);
 extern void errhandler(int handleNum);
 extern string errmsg[];
 extern int lineNo;
-
-
+extern bool compileOK;
+extern int preErrNum;
 
 /**
 *	四元式  函数头部声明
