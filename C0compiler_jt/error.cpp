@@ -5,6 +5,7 @@ using namespace std;
 
 #define fDEBUG
 
+
 string errmsg[]={
 "缺少源文件",
 "无法识别的字符",
@@ -13,8 +14,8 @@ string errmsg[]={
 "单引号中放了非法字符",
 "字符串未一行输完",
 "字符串中有非法字符",
-"该标识符未定义",
-"该标识符重复定义",
+"无法识别的标识符",
+"标识符重复定义",
 "找不到main函数",
 "main函数必须是void类型",
 "缺少类型声明",
@@ -25,7 +26,7 @@ string errmsg[]={
 "应是'}'",
 "应是':'",
 "应是';'",
-"条件中出现非法的关系表达式",
+"只能对变量进行赋值",
 "数字太大，最多10位数字，且绝对值不超过2147483647",
 "int常量等号后面必须是整数",
 "char常量的等号后面必须是字符",
@@ -47,7 +48,7 @@ string errmsg[]={
 "应是标识符",
 "常量只能定义为int或char",
 "应是'='",
-"应是字符",
+"应是';'或','",
 "应是'{'",
 "形参类型只能是int或char",
 "有返回的函数必须至少有一条不在分支里的返回语句",
@@ -56,11 +57,12 @@ string errmsg[]={
 "至少应该有一条case语句",
 "返回语句后面只能是';'或者'('",
 "符号表溢出",
-"函数定义部分不能有';'",
-"主函数的函数体之后不允许有内容"
+"函数定义部分不能有语句",
+"主函数的函数体之后不允许有内容",
+"无返回的函数返回语句不能有返回值"
 };
 
-int handler[] = 
+int handler[] =
 {
 0,
 1,
@@ -69,8 +71,8 @@ int handler[] =
 1,
 1,
 1,
-1,
-1,
+5,
+3,
 0,
 1,
 1,
@@ -83,6 +85,8 @@ int handler[] =
 1,
 1,
 1,
+2,
+2,
 1,
 1,
 1,
@@ -95,6 +99,13 @@ int handler[] =
 1,
 1,
 1,
+3,
+1,
+1,
+1,
+1,
+3,
+3,
 1,
 1,
 1,
@@ -102,28 +113,26 @@ int handler[] =
 1,
 1,
 1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
-1,
+0,
+4,
 1,
 1
 };
 
+unsigned int errCnt = 0;
+bool compileOK = 1;
+
 void error(int errorNum){
-	cout << "!!!!!!!!!!!!!!error : " << errorNum << "!!!!!!!!!!!!!!!" <<endl;
-	cout << "line: " << lineNo << endl;
-	cout << "code: " << srcin << endl;
-	cout << "reason: " << errmsg[errorNum] << endl;
-	#ifdef sDEBUG
-	cout << lineNo << endl;
-	#endif
+    compileOK = 0; // 编译失败标识，在生成的目标代码中加入无法运行的提示
+	cout << "errCnt: " << ++errCnt << endl;
+
+	// cout << "!!!!!!!!!!!!!!error : " << errorNum << "!!!!!!!!!!!!!!!" <<endl;
+	// cout << "line: " << lineNo << endl;
+	// cout << "code: " << srcin << endl;
+	// cout << "reason: " << errmsg[errorNum] << endl;
+	// #ifdef sDEBUG
+	// cout << lineNo << endl;
+	// #endif
 	#ifdef fDEBUG
 	fout << "!!!!!!!!!!!!!!error : " << errorNum << "!!!!!!!!!!!!!!!" <<endl;
 	fout << "line: " << lineNo << endl;
@@ -131,17 +140,37 @@ void error(int errorNum){
 	fout << "reason: " << errmsg[errorNum] << endl;
 	#endif // fDEBUG
 
+	preErrNum = errorNum;
 	errhandler(handler[errorNum]);
 }
 
 void errhandler(int handleNum){
 	switch(handleNum){
-		case 0: 
+		case 0:
 			// 中止程序
 			cout << "## fatal error. stop compiling. ##" <<endl;
 			exit(0);
 		case 1:
 			// 不做任何处理
+			break;
+		case 2:
+			// 读下一个单词
+			getOneSym();
+			break;
+		case 3:
+			// 跳到下一个分号或逗号
+			while(symbol != SEMICOLON && symbol != COMMA)
+				getOneSym();
+			break;
+		case 4:
+			// 跳到下一个类型声明符号int\char\void
+			while(symbol != INTSY && symbol != CHARSY && symbol != VOIDSY)
+				getOneSym();
+			break;
+		case 5:
+			// 跳到下一个分号
+			while(symbol != SEMICOLON)
+				getOneSym();
 			break;
 	}
 }
