@@ -1,0 +1,8 @@
+indexTab:
+ 1
+0:
+name:a obj = VARIABLE typ = int[] value = 0 addr = 1 paramNum = 0
+
+1:
+name:main obj = FUNCTION typ = void value = 0 addr = 0 paramNum = 0
+

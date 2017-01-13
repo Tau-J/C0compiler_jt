@@ -2,11 +2,12 @@
 #include<vector>
 #include<sstream>
 #include<fstream>
+#include<cstring>
 using namespace std;
 /**
 *	语法分析  函数头部声明
 **/
-void programProc();
+extern void programProc();
 void headProc();
 void constProc();
 void constDec();
@@ -19,16 +20,16 @@ void mainProc();
 void compoundStatement(bool ret);
 void statementList(bool ret);
 void statement(bool ret);
-void condition();
-void loop();
+void condition(bool ret);
+void loop(bool ret);
 void valueParamList();
 void assignment();
 void scanfStatement();
 void printfStatement();
 void returnStatement(bool retv);
-void switchStatement();
-void caseStatement();
-string caseTable(string,string);
+void switchStatement(bool ret);
+void caseStatement(bool ret);
+string caseTable(string,string,bool ret);
 void oneCase();
 void callvoid();
 void paramTable();
@@ -46,14 +47,15 @@ void uInt();
 **/
 
 extern void getOneSym();
+extern void getChar();
 extern string token;
 extern ofstream fout;
+extern char chr;
 
 extern char srcin[1024];
 extern char *ptr;
 extern void getSym();
 extern ifstream fin;
-extern void programProc();
 
 extern string resWord[];
 extern string symName[];
@@ -171,8 +173,8 @@ extern void error(int errorNum);
 extern void errhandler(int handleNum);
 extern string errmsg[];
 extern int lineNo;
-
-
+extern bool compileOK;
+extern int preErrNum;
 
 /**
 *	四元式  函数头部声明

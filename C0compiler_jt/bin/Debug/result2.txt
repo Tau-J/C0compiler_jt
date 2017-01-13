@@ -1,0 +1,17 @@
+-----------------
+it is a varDec
+!!!!!!!!!!!!!!error : 15!!!!!!!!!!!!!!!
+line: 1
+code: int a[-1];
+reason: 应是']'
+ name = a obj = VARIABLE typ = int[] value = 0 addr = 1 paramNum = 0
+!!!!!!!!!!!!!!error : 41!!!!!!!!!!!!!!!
+line: 1
+code: int a[-1];
+reason: 应是';'或','
+-----------------
+it is a mainProc
+-----------------
+it is a statementList
+it is an assignment
+-----------------
