@@ -207,7 +207,11 @@ bool isValidStrChar(){
 	else return 0;
 }
 void catToken(){
-	token += chr;
+	// 因为最后是在mars中运行，直接原样复制的话，
+	// 遇到\n这种符号会被mars识别为转义后的符号
+	// 因此还需要自行转义一次
+	if(chr == '\\')token += "\\\\";
+	else token += chr;
 }
 
 void retract(){
@@ -223,7 +227,7 @@ void getChar(){
 		if('A' <= chr && chr <= 'Z')
 			chr += 32;
 	}
-	
+
 }
 
 // 如果是保留字则返回对应的类编码，否则返回-1
@@ -238,11 +242,11 @@ void transNum(){
 
 	// 检查数字是否超出范围
 
-	// error:20 
+	// error:20
 	// 数字太大，最多10位数字，且绝对值不超过2147483647
 	int len = token.length();
 	if(len > 10)error(20);
-	if(len == 10 && token[0] > '3')error(20);
+	else if(len == 10 && token[0] > '3')error(20);
 
 
 	ss.str("");
@@ -251,8 +255,11 @@ void transNum(){
 	ss << token;
 	ss >> num;
 
-	if(symbol != MINUS && num > 2147483647)error(20);
-	if(symbol == MINUS && num > 2147483648)error(20);
+    if(!preErrNum){
+        if(symbol != MINUS && num > 2147483647)error(20);
+        else if(symbol == MINUS && num > 2147483648)error(20);
+    }
+
 }
 
 void clearToken(){
@@ -371,6 +378,7 @@ void getOneSym(){
 		}
 	}
 	else if(isSQuote()){
+		symbol = CHAR;
 		dontChange = 1;
 		getChar();
 		dontChange = 0;
@@ -379,14 +387,13 @@ void getOneSym(){
 		   isLetter() || isDigit()){
 			token += chr;
 			getChar();
-			if(isSQuote()) symbol = CHAR;
-			else error(3);
-		}else error(4);
+			if(!isSQuote()) error(3);//单引号中出现多个字符
+		}else error(4);//单引号中放了非法字符
 	}
 	else if(isDQuote()){
 		dontChange = 1;
 		getChar();
-		
+
 
 		bool errorFlag = 0;
 
@@ -401,13 +408,13 @@ void getOneSym(){
 			getChar();
 
 			if(chr == '\0'){
-				error(5);
+				error(5);//字符串未一行输完或缺少另一个双引号
 				break;
 			}
 		}
 		dontChange = 0;
 
-		if(errorFlag) error(6);
+		if(errorFlag) error(6);// 字符串中有非法字符
 
 		// if(token == "") error(28); // 字符串可以是空串，此条错误已移除
 
@@ -446,15 +453,18 @@ void getOneSym(){
 			token = "!=";
 			symbol = NOTEQU;
 		}
-		else error(2);
+		else error(2);//单独的一个感叹号
 	}
-	else error(1);
+	else error(1);//无法识别的字符
 
     #ifdef DISPLAY
 	display();
 	#endif
 
-	getChar();
+	if(preErrNum == 1 || preErrNum == 3 || preErrNum == 4){
+		preErrNum = 0;
+	}
+	else getChar();
 }
 void display(){
 

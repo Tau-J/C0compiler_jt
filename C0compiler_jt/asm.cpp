@@ -91,6 +91,7 @@ public:
 SwitchStack switchstack[MAX_SWITCH_STACK];
 int swp = 0;
 
+// 将一个临时寄存值登录到临时寄存值表
 void addtempvar(string name){
 	tempvar_table[tvp].name = name;
 	tempvar_table[tvp].index = sp -1;
@@ -115,7 +116,6 @@ void sinktempvar(){
 }
 
 void pushFuncIntoSStack(){
-
 
 // preabp 将上一级头部fp压栈
 	#ifdef showcomment
@@ -227,6 +227,10 @@ void midcode2MIPS(){
 	sp = 0;
 	ap = 0;
 	qp = cur_q; // 获取四元式表的长度,cur_q之前用于生成四元式表，此时指向表尾部
+
+    // 编译失败会加入无法运行的提示
+    if(!compileOK)
+        cout <<"compile failed" <<endl;
 
 	// .data 字符串声明
 	cout <<".data\n"<<endl;
@@ -1065,8 +1069,12 @@ void asm_jne(QUAT* q){
 	cout <<"# "<< q->opt <<','<< q->f1 <<','<< q->f2 <<',' << q->f3 <<endl;
 	#endif
 
-	cout <<"!!!!!!!!!!!!!!!!!!!废弃的jne!!!!!!!!!!!!!!!!!!!!!"<<endl;
-	//这个函数应该是用不上了
+	int t = reg_pool.get_t();
+
+	get_from_stack(t,q->f1);
+	
+	// beq  $t,$0,lab
+	cout <<"beq\t$t"<<t<<",$0,"<<q->f3<<endl;
 }
 void asm_jmp(QUAT* q){
 	#ifdef showcomment
@@ -1130,6 +1138,12 @@ void asm_ret(QUAT* q){
 		// 跳转
 		// jr  $ra
 		cout <<"jr\t$ra\n"<<endl;
+	}else{
+		// 如果是在主函数中读到return则直接结束程序
+
+		// li $v0,10
+		cout <<"li\t$v0,10"<<endl;
+		cout <<"syscall\n"<<endl;
 	}
 
 	// 吃掉没用的end四元式

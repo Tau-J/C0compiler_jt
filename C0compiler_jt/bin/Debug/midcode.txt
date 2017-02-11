@@ -1,0 +1,4 @@
+quats:0  int[],,0,a
+quats:1  func,void,,main
+quats:2  []=,1,0,a
+quats:3  end,,,main

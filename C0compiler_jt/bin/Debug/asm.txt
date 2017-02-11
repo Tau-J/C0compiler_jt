@@ -1,0 +1,51 @@
+compile failed
+.data
+
+.text
+add	$t9,$sp,0
+
+add	$fp,$sp,0
+
+li	$t1,0
+temp_label0:
+beq	$t1,$0,temp_label1
+sw	$0,0($sp)
+add	$sp,$sp,-4
+
+add	$t1,$t1,-1
+j	temp_label0
+temp_label1:
+j	main
+
+# func,void,,main
+main:
+# preabp = $fp
+sw	$fp,0($sp)
+# $fp = $sp
+add  $fp,$sp,0
+add	$sp,$sp,-4
+
+# ret_addr = $ra
+sw	$ra,0($sp)
+add	$sp,$sp,-4
+
+# []=,1,0,a
+# get 1
+addi	$t0,$0,1
+
+# get 0
+addi	$t1,$0,0
+
+# get a
+li	$t2,0
+
+add	$t2,$t2,$t1
+addi	$t2,$t2,0
+sll	$t2,$t2,2
+sub	$t2,$t9,$t2
+sw	$t0,0($t2)
+
+# end,,,main
+add	$sp,$fp,0
+lw	$ra,-4($fp)
+lw	$fp,0($fp)

@@ -12,6 +12,7 @@ int main(){
 	char path[1024];
 
 
+
 	cout << "input path: "<<endl;
 	cin >> path;
 
